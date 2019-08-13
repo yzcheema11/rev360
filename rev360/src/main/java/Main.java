@@ -6,71 +6,62 @@ public class Main {
     DecimalFormat axisFormat = new DecimalFormat("000");
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    double cylinderPower;
-    double storedCylinder = 30.00;
-    double spherePower;
-    double storedSphere = 30.00;
-    int axis;
-    int storedAxis;
+    private double cylinderPower;
+    private double spherePower;
+    private int axisPower;
 
-
-
-
-
-    public void captureRefractions() {
-        while (storedSphere == 30.00) {
+    public void captureSphere() {
+        do{
             System.out.println("Enter a valid Sphere Power between -25.00 and 25.00 that is incremented by .25:");
             spherePower = scanner.nextDouble();
-            if (spherePower >= -25.00 && spherePower <= 25.00)
-                if (decimalFormat.format(spherePower).endsWith(".00") || decimalFormat.format(spherePower).endsWith(".25") || decimalFormat.format(spherePower).endsWith(".50") || decimalFormat.format(spherePower).endsWith(".75")) {
-                storedSphere = spherePower;
-            }
         }
-        while (storedCylinder == 30.00) {
-            System.out.println("Enter a valid Cylinder Power between -15.00 and 15.00 that is incremented by .25:");
-            cylinderPower = scanner.nextDouble();
-            if (cylinderPower >= -15.00 && cylinderPower <= 15.00)
-                if (decimalFormat.format(cylinderPower).endsWith(".00") || decimalFormat.format(cylinderPower).endsWith(".25") || decimalFormat.format(cylinderPower).endsWith(".50") || decimalFormat.format(cylinderPower).endsWith(".75")) {
-                    storedCylinder = cylinderPower;
-                }
-        }
-        while (storedAxis == 0) {
-            System.out.println("Enter a valid Axis Power between 1 and 180");
-            axis = scanner.nextInt();
-            if (axis <= 0){
-                storedAxis = axis + 180;
-            }
-            if (axis > 180){
-                storedAxis = axis - 180;
-            }
-        }
-        String output = ("You have entered: " + decimalFormat.format(storedSphere) + " " + decimalFormat.format(storedCylinder) + " x " + axisFormat.format(storedAxis));
-        System.out.println(output);
-        double newSphere = storedCylinder + spherePower;
-        double newCylinder = storedCylinder * -1;
-        storedAxis += 90;
-        System.out.println(newSphere);
-        System.out.println(newCylinder);
-        System.out.println(storedAxis);
-        int newAxis = storedAxis > 180? storedAxis - 180 : storedAxis;
-//        if (storedAxis > 180) {
-//            newAxis = storedAxis - 180;
-//        }
-        output = ("Your converted refraction is: " + decimalFormat.format(newSphere) + " " + decimalFormat.format(newCylinder) + " x " + axisFormat.format(newAxis));
-        System.out.println(output);
+        while(Math.abs(spherePower) >= 25 || !insertFunctionToCheckIfQuaterHere(spherePower));
     }
 
-//    public void convertRefractions() {
-//        System.out.println(newSphere);
-//        System.out.println(newCylinder);
-//    }
+    public void captureCylinder() {
+        do {
+            System.out.println("Enter a valid Cylinder Power between -15.00 and 15.00 that is incremented by .25:");
+            cylinderPower = scanner.nextDouble();
+        }
+        while (Math.abs(cylinderPower) >= 15 || !insertFunctionToCheckIfQuaterHere(cylinderPower)) ;
+
+    }
+
+    public void captureAxis() {
+        System.out.println("Enter a valid Axis Power between -179 and 359");
+        axisPower = scanner.nextInt();
+
+        if (axisPower < 0){
+            axisPower += 180;
+        }
+        else if (axisPower > 180){
+            axisPower -= 180;
+        }
+    }
+
+    public boolean insertFunctionToCheckIfQuaterHere(Double power) {
+        return (decimalFormat.format(power).endsWith(".00") || decimalFormat.format(power).endsWith(".25") || decimalFormat.format(power).endsWith(".50") || decimalFormat.format(power).endsWith(".75"));
+    }
+
+    public void convertRefractions() {
+        String output = ("You have entered: " + decimalFormat.format(spherePower) + " " + decimalFormat.format(cylinderPower) + " x " + axisFormat.format(axisPower));
+        System.out.println(output);
+        spherePower = cylinderPower + spherePower;
+        cylinderPower = cylinderPower * -1;
+        axisPower += 90;
+        int newAxis = axisPower > 180? axisPower - 180 : axisPower;
+        output = ("Your converted refraction is: " + decimalFormat.format(spherePower) + " " + decimalFormat.format(cylinderPower) + " x " + axisFormat.format(newAxis));
+        System.out.println(output);
+    }
 
 
 
     public static void main(String[] args) {
         Main main = new Main();
 
-        main.captureRefractions();
-//        main.convertRefractions();
+        main.captureSphere();
+        main.captureCylinder();
+        main.captureAxis();
+        main.convertRefractions();
     }
 }
