@@ -15,7 +15,7 @@ public class Main {
             System.out.println("Enter a valid Sphere Power between -25.00 and 25.00 that is incremented by .25:");
             spherePower = scanner.nextDouble();
         }
-        while(Math.abs(spherePower) >= 25 || !insertFunctionToCheckIfQuaterHere(spherePower));
+        while(Math.abs(spherePower) >= 25 || !insertFunctionToCheckIfQuarterHere(spherePower));
     }
 
     public void captureCylinder() {
@@ -23,7 +23,7 @@ public class Main {
             System.out.println("Enter a valid Cylinder Power between -15.00 and 15.00 that is incremented by .25:");
             cylinderPower = scanner.nextDouble();
         }
-        while (Math.abs(cylinderPower) >= 15 || !insertFunctionToCheckIfQuaterHere(cylinderPower)) ;
+        while (Math.abs(cylinderPower) >= 15 || !insertFunctionToCheckIfQuarterHere(cylinderPower)) ;
 
     }
 
@@ -39,7 +39,7 @@ public class Main {
         }
     }
 
-    public boolean insertFunctionToCheckIfQuaterHere(Double power) {
+    public boolean insertFunctionToCheckIfQuarterHere(Double power) {
         return (decimalFormat.format(power).endsWith(".00") || decimalFormat.format(power).endsWith(".25") || decimalFormat.format(power).endsWith(".50") || decimalFormat.format(power).endsWith(".75"));
     }
 
@@ -50,11 +50,9 @@ public class Main {
         cylinderPower = cylinderPower * -1;
         axisPower += 90;
         int newAxis = axisPower > 180? axisPower - 180 : axisPower;
-        output = ("Your converted refraction is: " + decimalFormat.format(spherePower) + " " + decimalFormat.format(cylinderPower) + " x " + axisFormat.format(newAxis));
+        output = ("Your converted refraction is: " + (spherePower < 0? " " : "+") + decimalFormat.format(spherePower) + (cylinderPower < 0? " " : " +") + decimalFormat.format(cylinderPower) + " x " + axisFormat.format(newAxis));
         System.out.println(output);
     }
-
-
 
     public static void main(String[] args) {
         Main main = new Main();
